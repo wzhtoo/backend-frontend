@@ -1,7 +1,7 @@
-import bcrypt from "bcryptjs";
 import cors from "cors";
 import express, { Request, Response } from "express";
 import fs from "fs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const PORT = 5000;
@@ -12,12 +12,13 @@ app.use(cors());
 
 app.listen(PORT, () => console.log(`Server has started listening on ${PORT}`));
 
-// Load user data from users.json (create the file if it doesn't exist)
 let users: { email: string; password: string }[] = [];
+
 interface Menu {
   name: string;
   price: number;
 }
+
 try {
   const userData = fs.readFileSync("./data/users.json", "utf-8");
   users = JSON.parse(userData);
@@ -77,7 +78,7 @@ app.post("/login", (req: Request, res: Response) => {
 app.post("/menu", (req: Request, res: Response) => {
   const { name, price } = req.body;
   if (!name || price === undefined) {
-    return res.status(400).send("Name and price are required.");
+    return res.status(400).send("Name and price are required");
   }
   menus.push({ name, price });
   res.status(200).send({ menus });
